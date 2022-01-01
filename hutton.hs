@@ -115,3 +115,105 @@ myInit (x:xs)
   -- ("Yes", 'a', True) :: (String, Char, Bool)
   -- (['a','b'], [False,True], ("hello", "world")) = ([Char], [Bool], (String,String))
   -- etc ...
+
+-- Curried functions
+-- Note that we are free to return functions as results
+add' :: Int -> (Int -> Int)
+add' x y = x + y
+
+mult' :: Int -> (Int -> (Int -> Int))
+mult' x y z = x * y * z
+-- Ommission of parens is allowed, and we note that our typical definition on multivariable
+-- functions simply conceals the notion of currying.
+
+-- Polymorphic types
+-- length [a] -> Int
+-- A type that contains one or more type variables is called 'polymorphic'
+
+-- Overloaded types
+-- Class constraints are written in the form C a where C is the name of a class and a
+-- is a type variable. For example, the type of the addition operator + is as follows:
+-- (+) :: Num a => a -> a -> a
+-- That is for any type a that is an INSTANCE of the class Num of numeric types, the
+-- function (+) has type a -> a -> a. Note that the parenteheses convert + into a curried
+-- function. A type that contains one or more class constraints is called OVERLOADED.
+
+-- Basic Types
+
+-- Eq - equality types.
+-- This class contains types whose values can be compared for equality or inequality. Using
+-- (==) :: a -> a -> Bool
+-- (/=) :: a -> a -> Bool
+-- Note that all basic types, Bool, Char, String, Int, Integer, Float, Double are instances
+-- of the Eq class, as are lists and tuples of them.
+
+-- Ord - ordered types
+-- This class contains types that are instances of the equality class Eq, but in addition
+-- whose values are totally (linearly) ordered, and as such can be compared and processed
+-- using the following six methods:
+-- (<) :: a -> a -> Bool
+-- (<=) :: a -> a -> Bool
+-- (>) :: a -> a -> Bool
+-- (>=) :: a -> a -> Bool
+-- min :: a -> a -> a
+-- max :: a -> a -> a
+
+-- Show - showable types
+-- This class contains types whose value can be converted into strings of chars using
+-- show :: a -> String
+
+-- Read - readable types
+-- This class is dual to Show, and contains types whose values can be converted from strings
+-- using the method:
+-- read :: String -> a
+
+-- Num - numeric types
+-- This class contains types whose values are numeric, and as such can be processed
+-- using the following six methods:
+-- (+) :: a -> a -> a
+-- (*) :: a -> a -> a
+-- (-) :: a -> a -> a
+-- negate :: a -> a
+-- abs :: a -> a
+-- signum :: a -> a
+
+-- Integral - integral types
+-- This class contains types that are instances of the numeric class Num, but in addition
+-- whose values are integers, and as such support the methods of integer division and
+-- integer remainder:
+-- div :: a -> a -> a
+-- mod :: a -> a -> a
+
+-- Fractional - fractional types
+-- This class contains types that are instances of the numeric class Num, but in addition
+-- whose values are non-integral, and as such support the methods of fractional division
+-- and fractional reciprocation:
+-- (/) :: a -> a -> a
+-- recip :: a -> a (recip 2.0 -> 0.5)
+
+-- Chapter 3 Exercises
+-- 1. Give types
+-- ['a', 'b', 'c'] -> [Char]
+-- ('a', 'b', 'c') -> (Char, Char, Char)
+-- [(False, '0'), (True, '1')] -> [(Bool, Char)]
+-- ([False,True], ['0', '1']) -> ([Bool], [Char])
+-- [tail, init, reverse] -> [[a] -> [a]]
+
+-- 2. Write definitions
+-- bools :: [Bool] -> bools = [True, False, True]
+-- nums :: [[Int]]
+-- nums = [[1,2,3], [4,5,6,7]]
+-- add :: Int -> Int -> Int -> Int
+-- add a b c = a + b + c
+-- copy :: a -> (a,a)
+-- copy x = (x,x)
+-- apply :: (a -> b) -> a -> b
+-- apply (f) x = f x
+
+-- 3. Types of functions
+-- second xs = head (tail xs) : [a] -> a
+-- swap (x,y) = (y,x) : (a,a) -> (a,a)
+-- pair x y = (x,y) : a -> a -> (a,a)
+-- double x = x*2 : Num a => a -> a
+-- palindrome xs = reverse xs == xs : [a] -> Bool
+-- twice f x = f (f x) : (a -> a) -> a -> a
